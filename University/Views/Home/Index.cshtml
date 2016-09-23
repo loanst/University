@@ -1,0 +1,36 @@
+﻿@using University.Models
+@{
+    ViewBag.Title = "University";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @using (UniversityContext db = new UniversityContext())
+        {
+            <h4>Lecturers:</h4>
+            foreach (Lecturer lecturer in db.Lecturers.ToList())
+            {
+                //возможность выбрать всех студентов данного преподавателя
+                <p>- <b>@lecturer.Name</b> @Ajax.ActionLink("show students", "ShowStudentsOfLecturer", new { lecturerId = @lecturer.Id }, new AjaxOptions { UpdateTargetId = "data" })</p>
+
+            }
+            <h4>Students:</h4>
+            foreach (Student student in db.Students.ToList())
+            {
+                //возможность выбрать предметы по которому обучается данный студент
+                <p>- <b>@student.Name</b> @Ajax.ActionLink("show subjects", "ShowSubjectsOfStudent", new { studentId = @student.Id }, new AjaxOptions { UpdateTargetId = "data" })</p>
+
+            }
+            <h4>Subjects:</h4>
+            foreach (Subject subject in db.Subjects.ToList().Distinct())
+            {
+                //возможность выбрать оценки
+                <p>- <b>@subject.Name</b> @Ajax.ActionLink("show marks", "ShowMarks", new { subjectName = @subject.Name }, new AjaxOptions { UpdateTargetId = "data" })</p>
+
+            }
+        }
+    </div>
+    <div id="data" class="col-md-8">
+        <h1>Data</h1>
+    </div>
+</div>

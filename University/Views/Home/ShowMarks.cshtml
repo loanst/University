@@ -1,0 +1,47 @@
+﻿@using University.Models
+
+@{
+    string subjectName = ViewBag.subjectName;
+}
+
+@try
+{
+    using (UniversityContext db = new UniversityContext())
+    {
+        List<int> marksValuesOfSubject = db.Marks.Where(m => m.Subject.Name == subjectName).Select(m => m.Value).ToList();
+        <p>Average mark for this subject: @marksValuesOfSubject.Average().ToString("F")</p>
+
+
+        List<Subject> subjects = db.Subjects.Where(s => s.Name == subjectName).ToList();
+        List<Student> colOfStudentsInSubject = new List<Student>();
+        foreach (Subject subject in subjects)
+        {
+            db.Entry(subject).Collection(c => c.Students).Load();
+            colOfStudentsInSubject.AddRange(subject.Students.ToList());
+
+        }
+
+        foreach (Student student in colOfStudentsInSubject)
+        {
+            List<int> marksValuesOfStudent = db.Marks.Where(m => m.Subject.Name == subjectName && m.Student.Name == student.Name).Select(m => m.Value).ToList();
+            <p>
+                @student.Name:
+                @foreach (int markValue in marksValuesOfStudent)
+                {
+                    <span>@markValue </span>
+                }
+            </p>
+        }
+
+    }
+
+}
+catch (Exception ex)
+{
+    <p>En error occurred</p>
+}
+
+
+
+
+

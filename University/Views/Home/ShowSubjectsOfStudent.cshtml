@@ -1,0 +1,32 @@
+﻿@using University.Models
+
+@{
+    int studentId = @ViewBag.studentId;
+}
+
+@try
+{
+    using (UniversityContext db = new UniversityContext())
+    {
+        Student student = db.Students.Find(studentId);
+        db.Entry(student).Collection(c => c.Subjects).Load();
+        List<Subject> colOfSubjects = student.Subjects.ToList();
+
+        foreach (Subject subject in colOfSubjects)
+        {
+            <p>@subject.Name</p>
+
+        }
+
+    }
+}
+catch (Exception ex)
+{
+    <p>En error occurred</p>
+}
+
+
+
+
+
+
