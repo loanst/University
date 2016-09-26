@@ -1,6 +1,7 @@
 ﻿@using University.Models
 
 @{
+    Layout = null;
     int studentId = @ViewBag.studentId;
 }
 
@@ -17,7 +18,6 @@
             <p>@subject.Name</p>
 
         }
-
     }
 }
 catch (Exception ex)

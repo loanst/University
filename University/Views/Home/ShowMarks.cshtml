@@ -1,6 +1,7 @@
 ﻿@using University.Models
 
 @{
+    Layout = null;
     string subjectName = ViewBag.subjectName;
 }
 
@@ -10,7 +11,6 @@
     {
         List<int> marksValuesOfSubject = db.Marks.Where(m => m.Subject.Name == subjectName).Select(m => m.Value).ToList();
         <p>Average mark for this subject: @marksValuesOfSubject.Average().ToString("F")</p>
-
 
         List<Subject> subjects = db.Subjects.Where(s => s.Name == subjectName).ToList();
         List<Student> colOfStudentsInSubject = new List<Student>();
@@ -32,9 +32,7 @@
                 }
             </p>
         }
-
     }
-
 }
 catch (Exception ex)
 {

@@ -1,0 +1,42 @@
+﻿@using University.Models
+@{
+    Layout = null;
+    ViewBag.Title = "Edit";
+    Lecturer lecturer = @ViewBag.lecturer;
+}
+@try
+{
+    <h3>Edit @ViewBag.lecturer.Name</h3>
+    using (UniversityContext db = new UniversityContext())
+    {
+        <h4>Current subject:</h4>
+        if (@lecturer.Subjects.FirstOrDefault() != null)
+        {
+            <p>- @lecturer.Subjects.FirstOrDefault().Name @Ajax.ActionLink("leave", "LecturerLeaveSubject", new { lecturerId = lecturer.Id, subjectName = @lecturer.Subjects.FirstOrDefault().Name }, new AjaxOptions { UpdateTargetId = "data" })</p>
+        }
+        <h4>Available subjects:</h4>
+        if (@lecturer.Subjects.FirstOrDefault() != null)
+        {
+            <h6>(to add, lecturer has to leave his current subject)</h6>
+            foreach (Subject subject in ViewBag.colOfSubjects)
+            {
+                <p>- @subject.Name</p>
+            }
+
+        }
+        else
+        {
+            foreach (Subject subject in ViewBag.colOfSubjects)
+            {
+                <p>- @subject.Name @Ajax.ActionLink("add", "LecturerAddSubject", new { lecturerId = lecturer.Id, subjectName = @subject.Name }, new AjaxOptions { UpdateTargetId = "data" })</p>
+            }
+
+        }
+
+    }
+
+}
+catch (Exception ex)
+{
+    <p>En error occurred</p>
+}

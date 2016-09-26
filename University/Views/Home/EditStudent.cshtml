@@ -1,0 +1,32 @@
+﻿@using University.Models
+@{
+    Layout = null;
+    ViewBag.Title = "Edit";
+    Student student = @ViewBag.student;
+}
+
+@try
+{
+    using (UniversityContext db = new UniversityContext())
+    {
+        <h4>Student: <b>@student.Name</b></h4>
+        <h4>Edit marks:</h4>
+        foreach (Subject subject in student.Subjects.Distinct())
+        {
+            <p>
+                - @subject.Name:
+                @foreach (Mark mark in student.Marks.Where(m => m.Subject.Name == @subject.Name).ToList())
+                {
+                    int markId = mark.Id;
+                    <span>@Ajax.ActionLink(@mark.Value.ToString(), "EditMark", new { markId = markId }, new AjaxOptions { UpdateTargetId = "data" })</span>
+                }
+                <span>@Ajax.ActionLink("AddMark", "AddMark", new { studentId = student.Id, subjectId = subject.Id }, new AjaxOptions { UpdateTargetId = "data" })</span>
+            </p>
+        }
+    }
+}
+catch (Exception ex)
+{
+    <p>En error occurred</p>
+}
+

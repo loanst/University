@@ -1,0 +1,38 @@
+﻿@using University.Models
+@{
+    Layout = null;
+    ViewBag.Title = "Add mark";
+    Mark mark = @ViewBag.mark;
+}
+
+@try
+{
+    using (Ajax.BeginForm("AddMark", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "data" }))
+    {
+        <div class="form-horizontal">
+            <h4>New mark</h4>
+            <hr />
+            @Html.Hidden("Id", mark.Id)
+            @Html.Hidden("studentId", mark.StudentId)
+            @Html.Hidden("subjectId", mark.SubjectId)
+
+            <div class="form-group">
+                @Html.Label("Value", "Value", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBox("Value")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Add" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+}
+catch (Exception ex)
+{
+    <p>En error occurred</p>
+}
+

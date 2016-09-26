@@ -179,6 +179,14 @@
     <Content Include="Views\Home\ShowMarks.cshtml" />
     <Content Include="Views\Home\ShowSubjectsOfStudent.cshtml" />
     <Content Include="Views\Home\ShowStudentsOfLecturer.cshtml" />
+    <Content Include="Views\Home\Manage.cshtml" />
+    <Content Include="Views\Home\AddLecturer.cshtml" />
+    <Content Include="Views\Home\AddStudent.cshtml" />
+    <Content Include="Views\Home\AddSubject.cshtml" />
+    <Content Include="Views\Home\EditLecturer.cshtml" />
+    <Content Include="Views\Home\EditStudent.cshtml" />
+    <Content Include="Views\Home\EditMark.cshtml" />
+    <Content Include="Views\Home\AddMark.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

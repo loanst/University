@@ -1,0 +1,48 @@
+﻿@using University.Models
+@{
+    ViewBag.Title = "Manage";
+}
+<h2>Manage</h2>
+<div class="row">
+    <div class="col-md-6">
+        @using (UniversityContext db = new UniversityContext())
+        {
+            <h4>Lecturers(<span>@Ajax.ActionLink("add", "AddLecturer", new AjaxOptions { UpdateTargetId = "data" })</span>):</h4>
+            <table>
+                @foreach (Lecturer lecturer in db.Lecturers.ToList())
+                {
+                    <tr>
+                        <td>- <b>@lecturer.Name </b></td>
+                        <td>@Ajax.ActionLink("edit", "EditLecturer", new { lecturerId = @lecturer.Id }, new AjaxOptions { UpdateTargetId = "data" }) |</td>
+                        <td>@Html.ActionLink("delete", "DeleteLecturer", new { lecturerId = @lecturer.Id })</td>
+                    </tr>
+                }
+            </table>
+            <h4>Students(<span>@Ajax.ActionLink("add", "AddStudent", new AjaxOptions { UpdateTargetId = "data" })</span>):</h4>
+            <table>
+                @foreach (Student student in db.Students.ToList())
+                {
+                    <tr>
+                        <td>- <b>@student.Name</b></td>
+                        <td>@Ajax.ActionLink("edit", "EditStudent", new { studentId = @student.Id }, new AjaxOptions { UpdateTargetId = "data" }) |</td>
+                        <td>@Html.ActionLink("delete", "DeleteStudent", new { studentId = @student.Id })</td>
+                    </tr>
+                }
+            </table>
+            <h4>Subjects(<span>@Ajax.ActionLink("add", "AddSubject", new AjaxOptions { UpdateTargetId = "data" })</span>):</h4>
+            <table>
+                @foreach (Subject subject in db.Subjects.ToList().Distinct())
+                {
+                    <tr>
+                        <td>- <b>@subject.Name</b></td>
+                        <td>@Html.ActionLink("delete", "DeleteSubject", new { subjectName = @subject.Name })</td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+    <div id="data" class="col-md-6">
+        <h1>Data</h1>
+    </div>
+</div>
+
